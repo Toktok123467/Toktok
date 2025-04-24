@@ -1,10 +1,14 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search, User } from 'lucide-react';
+import { Search, User, Menu, Home, Compass, Image, Play, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -17,12 +21,46 @@ const Navbar = () => {
     }
   };
 
+  const mobileNavItems = [
+    { icon: Home, label: 'Home', path: '/' },
+    { icon: Compass, label: 'Browse', path: '/popular' },
+    { icon: Play, label: 'Battles', path: '/battles' },
+    { icon: Image, label: 'NFT Market', path: '/marketplace' },
+    { icon: User, label: 'Dashboard', path: '/dashboard' },
+    { icon: Plus, label: 'Create Remix', path: '/create' },
+  ];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="text-2xl font-bold gradient-text">TokTok</span>
-        </Link>
+        <div className="flex items-center gap-4">
+          <Sheet>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-64 p-0">
+              <div className="flex flex-col gap-2 p-4">
+                <h2 className="text-lg font-semibold mb-4">Menu</h2>
+                {mobileNavItems.map((item) => (
+                  <Link 
+                    key={item.path} 
+                    to={item.path}
+                    className="flex items-center gap-3 p-2 hover:bg-accent rounded-md"
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+          
+          <Link to="/" className="flex items-center gap-2">
+            <span className="text-2xl font-bold gradient-text">TokTok</span>
+          </Link>
+        </div>
         
         <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8 relative">
           <Input
@@ -43,27 +81,15 @@ const Navbar = () => {
         </form>
         
         <div className="flex items-center gap-4">
-          <Link to="/search" className="md:hidden">
-            <Button size="icon" variant="ghost">
-              <Search className="h-5 w-5" />
-            </Button>
-          </Link>
-          
-          <Link to="/dashboard">
+          <Link to="/create" className="hidden md:block">
             <Button variant="outline" size="sm" className="hidden sm:flex">
-              Creator Dashboard
+              Create Remix
             </Button>
           </Link>
           
           <Link to="/wallet">
             <Button className="bg-gradient-to-r from-toktok-purple to-toktok-pink hover:opacity-90">
               Connect Wallet
-            </Button>
-          </Link>
-          
-          <Link to="/profile">
-            <Button size="icon" variant="ghost">
-              <User className="h-5 w-5" />
             </Button>
           </Link>
         </div>
