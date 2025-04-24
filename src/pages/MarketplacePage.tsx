@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -207,8 +206,12 @@ const MarketplacePage = () => {
         
         <TabsContent value="all" className="space-y-6">
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredNfts.map((nft) => (
-              <NftCard key={nft.id} {...nft} />
+            {nfts.map((nft) => (
+              <NftCard 
+                key={nft.id} 
+                {...nft} 
+                rarity={nft.rarity as "common" | "uncommon" | "rare" | "legendary"}
+              />
             ))}
           </div>
           
@@ -225,7 +228,11 @@ const MarketplacePage = () => {
             {filteredNfts
               .filter((_, index) => [0, 1, 6, 2].includes(index))
               .map((nft) => (
-                <NftCard key={nft.id} {...nft} />
+                <NftCard 
+                  key={nft.id} 
+                  {...nft} 
+                  rarity={nft.rarity as "common" | "uncommon" | "rare" | "legendary"}
+                />
               ))}
           </div>
         </TabsContent>
@@ -235,7 +242,11 @@ const MarketplacePage = () => {
             {filteredNfts
               .filter((_, index) => [7, 4, 5, 3].includes(index))
               .map((nft) => (
-                <NftCard key={nft.id} {...nft} />
+                <NftCard 
+                  key={nft.id} 
+                  {...nft} 
+                  rarity={nft.rarity as "common" | "uncommon" | "rare" | "legendary"}
+                />
               ))}
           </div>
         </TabsContent>

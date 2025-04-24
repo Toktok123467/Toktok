@@ -3,6 +3,7 @@ import React from 'react';
 import VideoCard from '../components/common/VideoCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { Music } from 'lucide-react';
 
 const featuredRemixes = [
   {

@@ -283,7 +283,11 @@ const BattlesPage = () => {
         <TabsContent value="all" className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             {battles.map((battle) => (
-              <BattleCard key={battle.id} {...battle} />
+              <BattleCard 
+                key={battle.id} 
+                {...battle} 
+                status={battle.status as "live" | "upcoming" | "ended"} 
+              />
             ))}
           </div>
         </TabsContent>
@@ -293,7 +297,11 @@ const BattlesPage = () => {
             {battles
               .filter(battle => battle.status === 'live')
               .map((battle) => (
-                <BattleCard key={battle.id} {...battle} />
+                <BattleCard 
+                  key={battle.id} 
+                  {...battle} 
+                  status={battle.status as "live" | "upcoming" | "ended"} 
+                />
               ))}
           </div>
         </TabsContent>
@@ -303,7 +311,11 @@ const BattlesPage = () => {
             {battles
               .filter(battle => battle.status === 'upcoming')
               .map((battle) => (
-                <BattleCard key={battle.id} {...battle} />
+                <BattleCard 
+                  key={battle.id} 
+                  {...battle} 
+                  status={battle.status as "live" | "upcoming" | "ended"} 
+                />
               ))}
           </div>
         </TabsContent>
@@ -313,12 +325,17 @@ const BattlesPage = () => {
             {battles
               .filter(battle => battle.status === 'ended')
               .map((battle) => (
-                <BattleCard key={battle.id} {...battle} />
+                <BattleCard 
+                  key={battle.id} 
+                  {...battle} 
+                  status={battle.status as "live" | "upcoming" | "ended"} 
+                />
               ))}
           </div>
         </TabsContent>
       </Tabs>
       
+      {/* Upcoming Events & Challenges */}
       <section className="mt-12">
         <div className="flex items-center mb-6">
           <Calendar className="h-5 w-5 mr-2 text-toktok-blue" />

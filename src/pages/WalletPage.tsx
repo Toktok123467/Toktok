@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -111,14 +110,14 @@ const WalletPage = () => {
                     <span>Available</span>
                     <span>325 TT</span>
                   </div>
-                  <Progress value={65} className="h-2" indicatorClassName="bg-toktok-yellow" />
+                  <Progress value={65} className="h-2 bg-muted" indicatorClassName="bg-toktok-yellow" />
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-1">
                     <span>Staked</span>
                     <span>120 TT</span>
                   </div>
-                  <Progress value={24} className="h-2" indicatorClassName="bg-toktok-purple" />
+                  <Progress value={24} className="h-2" indicatorClassName="bg-gradient-to-r from-toktok-purple to-toktok-pink" />
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-1">
