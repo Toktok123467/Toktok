@@ -10,6 +10,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { toast } from "@/components/ui/use-toast";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -32,11 +33,29 @@ const Navbar = () => {
     { icon: Plus, label: 'Create Remix', path: '/create' },
   ];
 
-  const handleWalletClick = () => {
+  const handleWalletClick = async () => {
     if (isConnected) {
       disconnect();
+      toast({
+        title: "Wallet Disconnected",
+        description: "You've been disconnected from your wallet"
+      });
     } else {
-      connect();
+      try {
+        await connect({
+          preferredWallets: ['Sui Wallet', 'Sui Explorer'],
+        });
+        toast({
+          title: "Wallet Connected",
+          description: "Successfully connected to your wallet"
+        });
+      } catch (error) {
+        toast({
+          title: "Connection Failed",
+          description: "Failed to connect to wallet",
+          variant: "destructive"
+        });
+      }
     }
   };
 

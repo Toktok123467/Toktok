@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 export const SuiProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <WalletKitProvider>
+    <WalletKitProvider features={["sui:signTransactionBlock"]}>
       {children}
     </WalletKitProvider>
   );
