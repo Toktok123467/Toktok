@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search, User, Menu, Home, Compass, Image, Play, Plus } from 'lucide-react';
+import { Search, User, Menu, Home, Compass, Image, Play, Plus, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
+import { useSuiWallet } from '@/hooks/useSuiWallet';
 import {
   Sheet,
   SheetContent,
@@ -13,6 +14,7 @@ import {
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const navigate = useNavigate();
+  const { isConnected, address, connect, disconnect } = useSuiWallet();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,6 +31,14 @@ const Navbar = () => {
     { icon: User, label: 'Dashboard', path: '/dashboard' },
     { icon: Plus, label: 'Create Remix', path: '/create' },
   ];
+
+  const handleWalletClick = () => {
+    if (isConnected) {
+      disconnect();
+    } else {
+      connect();
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -87,11 +97,13 @@ const Navbar = () => {
             </Button>
           </Link>
           
-          <Link to="/wallet">
-            <Button className="bg-gradient-to-r from-toktok-purple to-toktok-pink hover:opacity-90">
-              Connect Wallet
-            </Button>
-          </Link>
+          <Button 
+            onClick={handleWalletClick} 
+            className="bg-gradient-to-r from-toktok-purple to-toktok-pink hover:opacity-90"
+          >
+            <Wallet className="h-4 w-4 mr-2" />
+            {isConnected ? `${address?.slice(0, 6)}...${address?.slice(-4)}` : 'Connect Wallet'}
+          </Button>
         </div>
       </div>
     </header>
