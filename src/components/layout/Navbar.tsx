@@ -42,9 +42,7 @@ const Navbar = () => {
       });
     } else {
       try {
-        await connect({
-          preferredWallets: ['Sui Wallet', 'Sui Explorer'],
-        });
+        await connect();
         toast({
           title: "Wallet Connected",
           description: "Successfully connected to your wallet"
