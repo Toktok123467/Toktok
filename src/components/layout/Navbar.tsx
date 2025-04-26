@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Search, User, Menu, Home, Compass, Image, Play, Plus, Wallet } from 'lucide-react';
@@ -48,9 +49,10 @@ const Navbar = () => {
           description: "Successfully connected to your wallet"
         });
       } catch (error) {
+        console.error("Wallet connection error:", error);
         toast({
           title: "Connection Failed",
-          description: "Failed to connect to wallet",
+          description: "Failed to connect to wallet. Please try again.",
           variant: "destructive"
         });
       }

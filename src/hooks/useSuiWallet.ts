@@ -6,7 +6,8 @@ export const useSuiWallet = () => {
   const { currentAccount, isConnected, connect, disconnect } = useWalletKit();
 
   const connectWallet = async () => {
-    await connect();
+    // Pass undefined to use default options
+    await connect(undefined);
   };
 
   return {
