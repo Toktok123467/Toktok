@@ -6,8 +6,8 @@ export const useSuiWallet = () => {
 
   const connectWallet = async () => {
     try {
-      // Connect with default options
-      await connect();
+      // Connect with required parameter (null is valid for default options)
+      await connect(null);
       return true;
     } catch (error) {
       console.error("Failed to connect wallet:", error);

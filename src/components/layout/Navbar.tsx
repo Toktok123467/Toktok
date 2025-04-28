@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Search, User, Menu, Home, Compass, Image, Play, Plus, Wallet } from 'lucide-react';
@@ -12,11 +11,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { toast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const navigate = useNavigate();
   const { isConnected, address, connect, disconnect } = useSuiWallet();
+  const [isConnecting, setIsConnecting] = React.useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,12 +49,15 @@ const Navbar = () => {
         description: "You've been disconnected from your wallet"
       });
     } else {
+      setIsConnecting(true);
       try {
-        await connect();
-        toast({
-          title: "Wallet Connected",
-          description: "Successfully connected to your wallet"
-        });
+        const success = await connect();
+        if (success) {
+          toast({
+            title: "Wallet Connected",
+            description: "Successfully connected to your wallet"
+          });
+        }
       } catch (error) {
         console.error("Wallet connection error:", error);
         toast({
@@ -55,6 +65,8 @@ const Navbar = () => {
           description: "Failed to connect to wallet. Please try again.",
           variant: "destructive"
         });
+      } finally {
+        setIsConnecting(false);
       }
     }
   };
@@ -119,12 +131,27 @@ const Navbar = () => {
           <Button 
             onClick={handleWalletClick} 
             className="bg-gradient-to-r from-toktok-purple to-toktok-pink hover:opacity-90"
+            disabled={isConnecting}
           >
             <Wallet className="h-4 w-4 mr-2" />
-            {isConnected ? `${address?.slice(0, 6)}...${address?.slice(-4)}` : 'Connect Wallet'}
+            {isConnecting ? 'Connecting...' : isConnected ? `${address?.slice(0, 6)}...${address?.slice(-4)}` : 'Connect Wallet'}
           </Button>
         </div>
       </div>
+
+      <Dialog open={isConnecting}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Connecting Wallet</DialogTitle>
+            <DialogDescription>
+              Please check your wallet and approve the connection request...
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center justify-center p-6">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-toktok-purple"></div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };
