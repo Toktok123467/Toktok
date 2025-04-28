@@ -7,7 +7,6 @@ export const SuiProvider = ({ children }: { children: ReactNode }) => {
     <WalletKitProvider 
       features={["sui:signTransactionBlock"]} 
       enableUnsafeBurner={false}
-      autoConnect={false}
     >
       {children}
     </WalletKitProvider>

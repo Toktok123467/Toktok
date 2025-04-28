@@ -1,13 +1,18 @@
 
 import { useWalletKit } from "@mysten/wallet-kit";
-import { type WalletAccount } from "@mysten/wallet-standard";
 
 export const useSuiWallet = () => {
   const { currentAccount, isConnected, connect, disconnect } = useWalletKit();
 
   const connectWallet = async () => {
-    // Pass undefined to use default options
-    await connect(undefined);
+    try {
+      // Connect with default options
+      await connect();
+      return true;
+    } catch (error) {
+      console.error("Failed to connect wallet:", error);
+      return false;
+    }
   };
 
   return {
