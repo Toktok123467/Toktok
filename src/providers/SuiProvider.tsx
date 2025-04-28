@@ -8,6 +8,8 @@ export const SuiProvider = ({ children }: { children: ReactNode }) => {
       features={["sui:signTransactionBlock"]} 
       enableUnsafeBurner={false}
       preferredWallets={["Sui Wallet", "Ethos Wallet", "Suiet"]}
+      // Explicitly disable autoConnect to ensure manual connection only
+      autoConnect={false}
     >
       {children}
     </WalletKitProvider>
